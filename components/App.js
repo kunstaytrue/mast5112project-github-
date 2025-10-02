@@ -33,3 +33,38 @@ function MenuProvider({ children }) {
 function useMenu() {
   return useContext(MenuContext);
 }
+
+function HomeScreen({ navigation }) {
+  const { menu } = useMenu();
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Image
+        source={{
+          uri: "https://img.icons8.com/color/100/restaurant.png",
+        }}
+        style={styles.logo}
+      />
+
+      <Text style={styles.title}>Menu</Text>
+      <Text style={styles.sub}>Total items: {menu.length}</Text>
+
+      <FlatList
+        data={menu}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Text style={styles.dish}>{item.name}</Text>
+            <Text style={styles.course}>{item.course}</Text>
+            <Text style={styles.price}>R {item.price}</Text>
+          </View>
+        )}
+      />
+
+      <View style={styles.row}>
+        <Button title="Manage Menu" onPress={() => navigation.navigate("Manage")} />
+        <Button title="Filter Menu" onPress={() => navigation.navigate("Filter")} />
+      </View>
+    </SafeAreaView>
+  );
+}
